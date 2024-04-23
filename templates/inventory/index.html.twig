@@ -1,0 +1,173 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inventory index{% endblock %}
+
+{% block body %}
+    <h1>Inventory index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>CreatedAt</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>N_chambre</th>
+                <th>Date_entree</th>
+                <th>Date_sortie</th>
+                <th>Section</th>
+                <th>Nombre_heures</th>
+                <th>Couts</th>
+                <th>Adresse_sortie</th>
+                <th>Porte_e_en</th>
+                <th>Sol_e_en</th>
+                <th>Mur_e_en</th>
+                <th>Plafond_e_en</th>
+                <th>Sol_ch_en</th>
+                <th>Mur_ch_en</th>
+                <th>Plafond_ch_en</th>
+                <th>Fenetre_en</th>
+                <th>Prises_ch_en</th>
+                <th>Armoire_en</th>
+                <th>Bureau_en</th>
+                <th>Table_chevet_en</th>
+                <th>Chaises_en</th>
+                <th>Lit_en</th>
+                <th>Matelas_en</th>
+                <th>Oreiller_en</th>
+                <th>Prise_tele_en</th>
+                <th>Prise_info_en</th>
+                <th>Prise_tv_en</th>
+                <th>Luminaire_en</th>
+                <th>Sol_sb_en</th>
+                <th>Mur_sb_en</th>
+                <th>Plafond_sb_en</th>
+                <th>Prises_sb_en</th>
+                <th>Vasque_lavabo_en</th>
+                <th>Toilettes_en</th>
+                <th>Miroir_en</th>
+                <th>Abattan_toilettes_en</th>
+                <th>Patere_en</th>
+                <th>Pare_douche_en</th>
+                <th>Porte_e_so</th>
+                <th>Sol_e_so</th>
+                <th>Mur_e_so</th>
+                <th>Plafond_e_so</th>
+                <th>Sol_ch_so</th>
+                <th>Mur_ch_so</th>
+                <th>Plafond_ch_so</th>
+                <th>Fenetre_so</th>
+                <th>Prises_ch_so</th>
+                <th>Armoire_so</th>
+                <th>Bureau_so</th>
+                <th>Table_chevet_so</th>
+                <th>Chaises_so</th>
+                <th>Lit_so</th>
+                <th>Matelas_so</th>
+                <th>Oreiller_so</th>
+                <th>Prise_tele_so</th>
+                <th>Prise_info_so</th>
+                <th>Prise_tv_so</th>
+                <th>Luminaire_so</th>
+                <th>Sol_sb_so</th>
+                <th>Mur_sb_so</th>
+                <th>Plafond_sb_so</th>
+                <th>Prises_sb_so</th>
+                <th>Vasque_lavabo_so</th>
+                <th>Toilettes_so</th>
+                <th>Miroir_so</th>
+                <th>Abattan_toilettes_so</th>
+                <th>Patere_so</th>
+                <th>Pare_douche_so</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for inventory in inventories %}
+            <tr>
+                <td>{{ inventory.id }}</td>
+                <td>{{ inventory.createdAt ? inventory.createdAt|date('Y-m-d') : '' }}</td>
+                <td>{{ inventory.nom }}</td>
+                <td>{{ inventory.prenom }}</td>
+                <td>{{ inventory.nChambre }}</td>
+                <td>{{ inventory.dateEntree ? inventory.dateEntree|date('Y-m-d') : '' }}</td>
+                <td>{{ inventory.dateSortie ? inventory.dateSortie|date('Y-m-d') : '' }}</td>
+                <td>{{ inventory.section }}</td>
+                <td>{{ inventory.nombreHeures }}</td>
+                <td>{{ inventory.couts }}</td>
+                <td>{{ inventory.adresseSortie }}</td>
+                <td>{{ inventory.porteEEn }}</td>
+                <td>{{ inventory.solEEn }}</td>
+                <td>{{ inventory.murEEn }}</td>
+                <td>{{ inventory.plafondEEn }}</td>
+                <td>{{ inventory.solChEn }}</td>
+                <td>{{ inventory.murChEn }}</td>
+                <td>{{ inventory.plafondChEn }}</td>
+                <td>{{ inventory.fenetreEn }}</td>
+                <td>{{ inventory.prisesChEn }}</td>
+                <td>{{ inventory.armoireEn }}</td>
+                <td>{{ inventory.bureauEn }}</td>
+                <td>{{ inventory.tableChevetEn }}</td>
+                <td>{{ inventory.chaisesEn }}</td>
+                <td>{{ inventory.litEn }}</td>
+                <td>{{ inventory.matelasEn }}</td>
+                <td>{{ inventory.oreillerEn }}</td>
+                <td>{{ inventory.priseTeleEn }}</td>
+                <td>{{ inventory.priseInfoEn }}</td>
+                <td>{{ inventory.priseTvEn }}</td>
+                <td>{{ inventory.luminaireEn }}</td>
+                <td>{{ inventory.solSbEn }}</td>
+                <td>{{ inventory.murSbEn }}</td>
+                <td>{{ inventory.plafondSbEn }}</td>
+                <td>{{ inventory.prisesSbEn }}</td>
+                <td>{{ inventory.vasqueLavaboEn }}</td>
+                <td>{{ inventory.toilettesEn }}</td>
+                <td>{{ inventory.miroirEn }}</td>
+                <td>{{ inventory.abattanToilettesEn }}</td>
+                <td>{{ inventory.patereEn }}</td>
+                <td>{{ inventory.pareDoucheEn }}</td>
+                <td>{{ inventory.porteESo }}</td>
+                <td>{{ inventory.solESo }}</td>
+                <td>{{ inventory.murESo }}</td>
+                <td>{{ inventory.plafondESo }}</td>
+                <td>{{ inventory.solChSo }}</td>
+                <td>{{ inventory.murChSo }}</td>
+                <td>{{ inventory.plafondChSo }}</td>
+                <td>{{ inventory.fenetreSo }}</td>
+                <td>{{ inventory.prisesChSo }}</td>
+                <td>{{ inventory.armoireSo }}</td>
+                <td>{{ inventory.bureauSo }}</td>
+                <td>{{ inventory.tableChevetSo }}</td>
+                <td>{{ inventory.chaisesSo }}</td>
+                <td>{{ inventory.litSo }}</td>
+                <td>{{ inventory.matelasSo }}</td>
+                <td>{{ inventory.oreillerSo }}</td>
+                <td>{{ inventory.priseTeleSo }}</td>
+                <td>{{ inventory.priseInfoSo }}</td>
+                <td>{{ inventory.priseTvSo }}</td>
+                <td>{{ inventory.luminaireSo }}</td>
+                <td>{{ inventory.solSbSo }}</td>
+                <td>{{ inventory.murSbSo }}</td>
+                <td>{{ inventory.plafondSbSo }}</td>
+                <td>{{ inventory.prisesSbSo }}</td>
+                <td>{{ inventory.vasqueLavaboSo }}</td>
+                <td>{{ inventory.toilettesSo }}</td>
+                <td>{{ inventory.miroirSo }}</td>
+                <td>{{ inventory.abattanToilettesSo }}</td>
+                <td>{{ inventory.patereSo }}</td>
+                <td>{{ inventory.pareDoucheSo }}</td>
+                <td>
+                    <a href="{{ path('app_inventory_show', {'id': inventory.id}) }}">show</a>
+                    <a href="{{ path('app_inventory_edit', {'id': inventory.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="72">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_inventory_new') }}">Create new</a>
+{% endblock %}

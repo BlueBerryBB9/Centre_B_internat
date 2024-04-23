@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Chambre index{% endblock %}
+
+{% block body %}
+    <h1>Chambre index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>N_chambre</th>
+                <th>Nom_bat</th>
+                <th>Capacite</th>
+                <th>Capacite_lit</th>
+                <th>Handicap</th>
+                <th>Formation</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>IsActive</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for chambre in chambres %}
+            <tr>
+                <td>{{ chambre.id }}</td>
+                <td>{{ chambre.nChambre }}</td>
+                <td>{{ chambre.nomBat }}</td>
+                <td>{{ chambre.capacite }}</td>
+                <td>{{ chambre.capaciteLit ? 'Yes' : 'No' }}</td>
+                <td>{{ chambre.handicap }}</td>
+                <td>{{ chambre.formation }}</td>
+                <td>{{ chambre.nom }}</td>
+                <td>{{ chambre.prenom }}</td>
+                <td>{{ chambre.isActive ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('app_chambre_show', {'id': chambre.id}) }}">show</a>
+                    <a href="{{ path('app_chambre_edit', {'id': chambre.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_chambre_new') }}">Create new</a>
+{% endblock %}
