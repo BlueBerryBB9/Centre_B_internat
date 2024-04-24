@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ChambreRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ChambreRepository::class)]
@@ -14,32 +15,42 @@ class Chambre
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+    #[Groups(['chambre'])]
 
     #[ORM\Column]
+    // #[Groups(['chambre'])]
     private ?int $n_chambre = null;
 
     #[ORM\Column(length: 100)]
+    #[Groups(['chambre'])]
     private ?string $nom_bat = null;
 
     #[ORM\Column]
+    #[Groups(['chambre'])]
     private ?int $capacite = null;
 
     #[ORM\Column]
+    #[Groups(['chambre'])]
     private ?bool $capacite_lit = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['chambre'])]
     private ?string $handicap = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['chambre'])]
     private ?string $formation = null;
 
     #[ORM\Column(length: 100)]
+    #[Groups(['chambre'])]
     private ?string $nom = null;
 
     #[ORM\Column(length: 100)]
+    #[Groups(['chambre'])]
     private ?string $prenom = null;
 
     #[ORM\Column]
+    #[Groups(['chambre'])]
     private ?bool $isActive = null;
 
     /**
