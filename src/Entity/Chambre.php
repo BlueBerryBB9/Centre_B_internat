@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\ChambreRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Symfony\Component\Serializer\Annotation\Groups;
+use App\Entity\Inventory;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ChambreRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ChambreRepository::class)]
 class Chambre
@@ -14,8 +15,8 @@ class Chambre
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['chambre', 'inventory'])]
     private ?int $id = null;
-    #[Groups(['chambre'])]
 
     #[ORM\Column]
     // #[Groups(['chambre'])]
@@ -31,7 +32,7 @@ class Chambre
 
     #[ORM\Column]
     #[Groups(['chambre'])]
-    private ?bool $capacite_lit = null;
+    private ?int $capacite_lit = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['chambre'])]
@@ -57,13 +58,15 @@ class Chambre
      * @var Collection<int, Inventory>
      */
     #[ORM\OneToMany(targetEntity: Inventory::class, mappedBy: 'chambre')]
+    #[Groups(['chambre2', 'inventory'])]
     private Collection $inventories;
 
-    #[ORM\Column(nullable: true)]
-    private ?bool $isPMR = null;
+    
+    // #[ORM\Column(nullable: true)]
+    // private ?bool $isPMR = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?bool $isAbsent = null;
+    // #[ORM\Column(nullable: true)]
+    // private ?bool $isAbsent = null;
 
     public function __construct()
     {
@@ -111,12 +114,12 @@ class Chambre
         return $this;
     }
 
-    public function isCapaciteLit(): ?bool
+    public function isCapaciteLit(): ?int
     {
         return $this->capacite_lit;
     }
 
-    public function setCapaciteLit(bool $capacite_lit): static
+    public function setCapaciteLit(int $capacite_lit): static
     {
         $this->capacite_lit = $capacite_lit;
 
@@ -213,27 +216,27 @@ class Chambre
         return $this;
     }
 
-    public function isPMR(): ?bool
-    {
-        return $this->isPMR;
-    }
+    // public function isPMR(): ?bool
+    // {
+    //     return $this->isPMR;
+    // }
 
-    public function setPMR(?bool $isPMR): static
-    {
-        $this->isPMR = $isPMR;
+    // public function setPMR(?bool $isPMR): static
+    // {
+    //     $this->isPMR = $isPMR;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function isAbsent(): ?bool
-    {
-        return $this->isAbsent;
-    }
+    // public function isAbsent(): ?bool
+    // {
+    //     return $this->isAbsent;
+    // }
 
-    public function setAbsent(?bool $isAbsent): static
-    {
-        $this->isAbsent = $isAbsent;
+    // public function setAbsent(?bool $isAbsent): static
+    // {
+    //     $this->isAbsent = $isAbsent;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 }

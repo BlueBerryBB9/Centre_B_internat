@@ -2,9 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\InventoryRepository;
+use App\Entity\User;
+use App\Entity\Chambre;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\InventoryRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: InventoryRepository::class)]
 class Inventory
@@ -12,222 +15,293 @@ class Inventory
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['inventory', 'user'])]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups(['inventory', 'user'])]
     private ?\DateTimeInterface $createdAt = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['inventory', 'user'])]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['inventory', 'user'])]
     private ?string $prenom = null;
     
     #[ORM\Column]
+    #[Groups(['inventory', 'user'])]
     private ?int $n_chambre = null;
     
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups(['inventory'])]
     private ?\DateTimeInterface $date_entree = null;
     
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[Groups(['inventory'])]
     private ?\DateTimeInterface $date_sortie = null;
     
     #[ORM\Column(length: 255)]
+    #[Groups(['inventory'])]
     private ?string $section = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['inventory'])]
     private ?int $nombre_heures = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['inventory'])]
     private ?float $couts = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $adresse_sortie = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $porte_e_en = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $sol_e_en = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $mur_e_en = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $plafond_e_en = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $sol_ch_en = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $mur_ch_en = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $plafond_ch_en = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $fenetre_en = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $prises_ch_en = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $armoire_en = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $bureau_en = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $table_chevet_en = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $chaises_en = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $lit_en = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $matelas_en = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $oreiller_en = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $prise_tele_en = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $prise_info_en = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $prise_tv_en = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $luminaire_en = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $sol_sb_en = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $mur_sb_en = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $plafond_sb_en = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $prises_sb_en = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $vasque_lavabo_en = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $toilettes_en = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $miroir_en = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $abattan_toilettes_en = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $patere_en = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $pare_douche_en = null;
     
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $porte_e_so = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $sol_e_so = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $mur_e_so = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $plafond_e_so = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $sol_ch_so = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $mur_ch_so = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $plafond_ch_so = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $fenetre_so = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $prises_ch_so = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $armoire_so = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $bureau_so = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $table_chevet_so = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $chaises_so = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $lit_so = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $matelas_so = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $oreiller_so = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $prise_tele_so = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $prise_info_so = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $prise_tv_so = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $luminaire_so = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $sol_sb_so = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $mur_sb_so = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $plafond_sb_so = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $prises_sb_so = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $vasque_lavabo_so = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $toilettes_so = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $miroir_so = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $abattan_toilettes_so = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $patere_so = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['inventory'])]
     private ?string $pare_douche_so = null;
 
     #[ORM\ManyToOne(inversedBy: 'inventories')]
+    #[Groups(['inventory', 'user'])]
     private ?User $auteur = null;
 
     #[ORM\ManyToOne(inversedBy: 'inventories')]
+    #[Groups(['inventory', 'user2'])]
     private ?Chambre $chambre = null;
 
     public function getId(): ?int
