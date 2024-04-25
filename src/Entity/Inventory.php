@@ -31,7 +31,7 @@ class Inventory
     private ?string $prenom = null;
     
     #[ORM\Column]
-    #[Groups(['inventory', 'user2', 'chambre2'])]
+    #[Groups(['inventory', 'user2'])]
     private ?int $n_chambre = null;
     
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -301,7 +301,6 @@ class Inventory
     private ?User $auteur = null;
 
     #[ORM\ManyToOne(inversedBy: 'inventories')]
-    #[Groups(['inventory'])]
     private ?Chambre $chambre = null;
 
     public function getId(): ?int
