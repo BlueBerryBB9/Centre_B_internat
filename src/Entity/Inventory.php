@@ -15,23 +15,23 @@ class Inventory
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['inventory', 'user'])]
+    #[Groups(['inventory', 'user2'])]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Groups(['inventory', 'user'])]
+    #[Groups(['inventory', 'user2'])]
     private ?\DateTimeInterface $createdAt = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['inventory', 'user'])]
+    #[Groups(['inventory', 'user2'])]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['inventory', 'user'])]
+    #[Groups(['inventory', 'user2'])]
     private ?string $prenom = null;
     
     #[ORM\Column]
-    #[Groups(['inventory', 'user'])]
+    #[Groups(['inventory', 'user2'])]
     private ?int $n_chambre = null;
     
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -297,11 +297,11 @@ class Inventory
     private ?string $pare_douche_so = null;
 
     #[ORM\ManyToOne(inversedBy: 'inventories')]
-    #[Groups(['inventory', 'user'])]
+    #[Groups(['inventory'])]
     private ?User $auteur = null;
 
     #[ORM\ManyToOne(inversedBy: 'inventories')]
-    #[Groups(['inventory', 'user2'])]
+    #[Groups(['inventory'])]
     private ?Chambre $chambre = null;
 
     public function getId(): ?int

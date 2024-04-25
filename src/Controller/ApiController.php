@@ -8,16 +8,18 @@ use DateTimeInterface;
 use App\Entity\Chambre;
 use App\Entity\Inventory;
 use App\Repository\UserRepository;
+use App\Repository\ChambreRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\Loader\Configurator\security;
 
 class ApiController extends AbstractController
 {
@@ -202,35 +204,46 @@ class ApiController extends AbstractController
             ], 200, [], ['groups' => ['inventory']]);
     }
 
-    // #[Route('/api/inventorys/{id}/edit', name: 'app_api_edit_inventory', methods: ['PUT'])]
-    // public function editInventory(Inventory $inventory, Request $request, SerializerInterface $serializer, EntityManagerInterface $em, ValidatorInterface $validator): Response
-    // {
-    //     $inventory = $serializer->deserialize($request->getContent(), Inventory::Class, 'json', ['object_to_populate' => $inventory]);
-
-    //     $errors = $validator->validate($inventory);
-    //     if (count($errors) > 0) {
-    //         return $this->json($errors, 400);
-    //     }
-        
-    //     $em->flush();
-
-    //     return $this->json([
-    //        'status' => 200,
-    //        'message' => 'inventory edited succesfully',
-    //         'data' => $inventory,
-    //         ], 200, [], ['groups' => ['inventory']]);
-    // }
-
-    #[Route('/api/new_inventory', name: 'app_api_inventory_new', methods: ['POST'])]
-    public function newInventory(Request $request, SerializerInterface $serializer, EntityManagerInterface $em, ValidatorInterface $validator): Response
+    #[Route('/api/inventorys_edit/{id}', name: 'app_api_inventory_edit', methods: ['PUT'])]
+    public function editInventory(Inventory $inventory, Request $request, SerializerInterface $serializer, EntityManagerInterface $em, ValidatorInterface $validator): Response
     {
         $body = $request->getContent();
+        $inventory = $serializer->deserialize($body, Inventory::class, 'json', ['object_to_populate' => $inventory]);
+
+        
+        $errors = $validator->validate($inventory);
+        if (count($errors) > 0) {
+            return $this->json($errors, 400);
+        }
+        $em->persist($inventory);
+        $em->flush();
+        return $this->json([
+            'status' => 200,
+           'message' => 'inventory edited succesfully',
+           'data' => $inventory,
+           ], 200, [], ['groups' => ['inventory']]);
+    }
+
+    #[Route('/api/new_inventory', name: 'app_api_inventory_new', methods: ['POST'])]
+    public function newInventory(ChambreRepository $chambreRepository, Request $request, SerializerInterface $serializer, EntityManagerInterface $em, ValidatorInterface $validator): Response
+    {
+
+        $body = $request->getContent();
         $inventory = $serializer->deserialize($body, Inventory::class, 'json');
-        $inventory->setNChambre(1);
+
         //dans cet objet on renseigne le createdAt
         $inventory->setCreatedAt(new \DateTimeImmutable());
         $inventory->setDateEntree(new \DateTime());
         $inventory->setDateSortie(new \DateTime());
+        $inventory->setAuteur($this->getUser());
+
+        $chambres = $chambreRepository->findAll();
+        $new_chambre = null;
+        foreach ($chambres as $key => $value) {
+            if ($value->getNChambre() == $inventory->getNChambre())
+                $new_chambre = $value;
+        }
+        $inventory->setChambre($new_chambre);
 
         $errors = $validator->validate($inventory);
         if (count($errors)) {
