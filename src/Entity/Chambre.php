@@ -23,7 +23,7 @@ class Chambre
     private ?int $n_chambre = null;
 
     #[ORM\Column(length: 100)]
-    #[Groups(['chambre'])]
+    #[Groups(['chambre', 'inventory'])]
     private ?string $nom_bat = null;
 
     #[ORM\Column]
@@ -39,15 +39,15 @@ class Chambre
     private ?string $handicap = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['chambre'])]
+    #[Groups(['chambre', 'inventory'])]
     private ?string $formation = null;
 
     #[ORM\Column(length: 100)]
-    #[Groups(['chambre'])]
+    #[Groups(['chambre', 'inventory'])]
     private ?string $nom = null;
 
     #[ORM\Column(length: 100)]
-    #[Groups(['chambre'])]
+    #[Groups(['chambre', 'inventory'])]
     private ?string $prenom = null;
 
     #[ORM\Column]
@@ -58,7 +58,7 @@ class Chambre
      * @var Collection<int, Inventory>
      */
     #[ORM\OneToMany(targetEntity: Inventory::class, mappedBy: 'chambre')]
-    #[Groups(['chambre2'])]
+    #[Groups(['chambre2', 'inventory'])]
     private Collection $inventories;
 
     
