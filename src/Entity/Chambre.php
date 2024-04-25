@@ -61,6 +61,12 @@ class Chambre
     #[Groups(['chambre2'])]
     private Collection $inventories;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $isAbsent = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $isPMR = null;
+
     
     // #[ORM\Column(nullable: true)]
     // private ?bool $isPMR = null;
@@ -239,4 +245,28 @@ class Chambre
 
     //     return $this;
     // }
+
+    public function isAbsent(): ?bool
+    {
+        return $this->isAbsent;
+    }
+
+    public function setAbsent(?bool $isAbsent): static
+    {
+        $this->isAbsent = $isAbsent;
+
+        return $this;
+    }
+
+    public function isPMR(): ?bool
+    {
+        return $this->isPMR;
+    }
+
+    public function setPMR(?bool $isPMR): static
+    {
+        $this->isPMR = $isPMR;
+
+        return $this;
+    }
 }
