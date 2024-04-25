@@ -297,11 +297,11 @@ class Inventory
     private ?string $pare_douche_so = null;
 
     #[ORM\ManyToOne(inversedBy: 'inventories')]
-    #[Groups(['inventory', 'user'])]
+    #[Groups(['inventory'])]
     private ?User $auteur = null;
 
     #[ORM\ManyToOne(inversedBy: 'inventories')]
-    #[Groups(['inventory', 'user2'])]
+    #[Groups(['inventory'])]
     private ?Chambre $chambre = null;
 
     public function getId(): ?int
