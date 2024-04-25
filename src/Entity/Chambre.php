@@ -19,7 +19,7 @@ class Chambre
     private ?int $id = null;
 
     #[ORM\Column]
-    // #[Groups(['chambre'])]
+    #[Groups(['chambre'])]
     private ?int $n_chambre = null;
 
     #[ORM\Column(length: 100)]
@@ -58,7 +58,7 @@ class Chambre
      * @var Collection<int, Inventory>
      */
     #[ORM\OneToMany(targetEntity: Inventory::class, mappedBy: 'chambre')]
-    #[Groups(['chambre2', 'inventory'])]
+    #[Groups(['chambre2'])]
     private Collection $inventories;
 
     

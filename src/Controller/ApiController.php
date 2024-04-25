@@ -19,7 +19,6 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\Loader\Configurator\security;
 
 class ApiController extends AbstractController
 {
@@ -209,13 +208,11 @@ class ApiController extends AbstractController
     {
         $body = $request->getContent();
         $inventory = $serializer->deserialize($body, Inventory::class, 'json', ['object_to_populate' => $inventory]);
-
         
         $errors = $validator->validate($inventory);
         if (count($errors) > 0) {
             return $this->json($errors, 400);
         }
-        $em->persist($inventory);
         $em->flush();
         return $this->json([
             'status' => 200,
@@ -227,13 +224,23 @@ class ApiController extends AbstractController
     #[Route('/api/new_inventory', name: 'app_api_inventory_new', methods: ['POST'])]
     public function newInventory(ChambreRepository $chambreRepository, Request $request, SerializerInterface $serializer, EntityManagerInterface $em, ValidatorInterface $validator): Response
     {
+        $new_chambre = null;
         $body = $request->getContent();
         $inventory = $serializer->deserialize($body, Inventory::class, 'json');
-        $inventory->setNChambre(1);
         //dans cet objet on renseigne le createdAt
         $inventory->setCreatedAt(new \DateTimeImmutable());
         $inventory->setDateEntree(new \DateTime());
         $inventory->setDateSortie(new \DateTime());
+
+        $inventory->setAuteur($this->getUser());
+
+        $chambres = $chambreRepository->findAll();
+        foreach ($chambres as $key => $value) {
+            if ($value->getNChambre() == $inventory->getNChambre()) {
+                $new_chambre = $value;
+            }
+        }
+        $inventory->setChambre($new_chambre);
 
         $errors = $validator->validate($inventory);
         if (count($errors)) {
