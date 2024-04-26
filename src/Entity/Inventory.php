@@ -15,19 +15,19 @@ class Inventory
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['inventory', 'user'])]
+    #[Groups(['inventory', 'user2', 'chambre2'])]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Groups(['inventory', 'user'])]
+    #[Groups(['inventory', 'user2', 'chambre2'])]
     private ?\DateTimeInterface $createdAt = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['inventory', 'user'])]
+    #[Groups(['inventory', 'user2', 'chambre2'])]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['inventory', 'user'])]
+    #[Groups(['inventory', 'user2', 'chambre2'])]
     private ?string $prenom = null;
     
     #[ORM\Column]
@@ -301,7 +301,6 @@ class Inventory
     private ?User $auteur = null;
 
     #[ORM\ManyToOne(inversedBy: 'inventories')]
-    // #[Groups(['inventory'])]
     private ?Chambre $chambre = null;
 
     public function getId(): ?int

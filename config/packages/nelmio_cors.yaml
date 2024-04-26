@@ -22,6 +22,7 @@ nelmio_cors:
             allow_headers: ['X-Custom-Auth']
             allow_methods: ['POST', 'PUT', 'GET', 'DELETE']
             max_age: 3600
+<<<<<<< HEAD
             hosts: ['^api\.']
 
 # nelmio_cors:
@@ -34,3 +35,6 @@ nelmio_cors:
 #         max_age: 3600
 #     paths:
 #         '^/': null
+=======
+            hosts: ['^api.']
+>>>>>>> 28de7e777af470b9a7066daf3228e24ab2d96fb3

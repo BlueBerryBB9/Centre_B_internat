@@ -19,7 +19,6 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\Loader\Configurator\security;
 
 class ApiController extends AbstractController
 {
@@ -101,24 +100,24 @@ class ApiController extends AbstractController
             ], 200, [], ['groups' => ['user', 'user2']]);
     }
 
-    // #[Route('/api/users/{id}/edit', name: 'app_api_edit_user', methods: ['PUT'])]
-    // public function editUser(User $user, Request $request, SerializerInterface $serializer, EntityManagerInterface $em, ValidatorInterface $validator): Response
-    // {
-    //     $user = $serializer->deserialize($request->getContent(), User::Class, 'json', ['object_to_populate' => $user]);
+    #[Route('/api/users/{id}/edit', name: 'app_api_edit_user', methods: ['PUT'])]
+    public function editUser(User $user, Request $request, SerializerInterface $serializer, EntityManagerInterface $em, ValidatorInterface $validator): Response
+    {
+        $user = $serializer->deserialize($request->getContent(), User::class, 'json', ['object_to_populate' => $user]);
 
-    //     $errors = $validator->validate($user);
-    //     if (count($errors) > 0) {
-    //         return $this->json($errors, 400);
-    //     }
+        $errors = $validator->validate($user);
+        if (count($errors) > 0) {
+            return $this->json($errors, 400);
+        }
         
-    //     $em->flush();
+        $em->flush();
 
-    //     return $this->json([
-    //         'status' => 200,
-    //         'message' => 'user edited succesfully',
-    //         'data' => $user,
-    //         ], 200, [], ['groups' => ['user2']]);
-    // }
+        return $this->json([
+            'status' => 200,
+            'message' => 'user edited succesfully',
+            'data' => $user,
+            ], 200, [], ['groups' => ['user', 'user2']]);
+    }
 
     //!---------------------------------------------------------------------------
 
@@ -127,7 +126,6 @@ class ApiController extends AbstractController
     {
         $body = $request->getContent();
         $chambre = $serializer->deserialize($body, Chambre::class, 'json');
-        $chambre->setNChambre(1); // Replace (int) with a valid integer value
         // $chambre->setNomBat($chambre->getNomBat());
         // $chambre->setCapacite($chambre->getCapacite());
         $chambre->setCapaciteLit(1);
@@ -173,24 +171,24 @@ class ApiController extends AbstractController
             ], 200, [], ['groups' => ['chambre', 'chambre2']]);
     }
 
-    // #[Route('/api/chambres/{id}/edit', name: 'app_api_edit_chambre', methods: ['PUT'])]
-    // public function editChambre(Chambre $chambre, Request $request, SerializerInterface $serializer, EntityManagerInterface $em, ValidatorInterface $validator): Response
-    // {
-    //     $chambre = $serializer->deserialize($request->getContent(), Chambre::Class, 'json', ['object_to_populate' => $chambre]);
+    #[Route('/api/chambres/{id}/edit', name: 'app_api_edit_chambre', methods: ['PUT'])]
+    public function editChambre(Chambre $chambre, Request $request, SerializerInterface $serializer, EntityManagerInterface $em, ValidatorInterface $validator): Response
+    {
+        $chambre = $serializer->deserialize($request->getContent(), Chambre::class, 'json', ['object_to_populate' => $chambre]);
 
-    //     $errors = $validator->validate($chambre);
-    //     if (count($errors) > 0) {
-    //         return $this->json($errors, 400);
-    //     }
+        $errors = $validator->validate($chambre);
+        if (count($errors) > 0) {
+            return $this->json($errors, 400);
+        }
         
-    //     $em->flush();
+        $em->flush();
 
-    //     return $this->json([
-    //        'status' => 200,
-    //        'message' => 'chambre edited succesfully',
-    //         'data' => $chambre,
-    //         ], 200, [], ['groups' => ['chambre2']]);
-    // }
+        return $this->json([
+           'status' => 200,
+           'message' => 'chambre edited succesfully',
+            'data' => $chambre,
+            ], 200, [], ['groups' => ['chambre', 'chambre2']]);
+    }
 
     //!---------------------------------------------------------------------------
     
@@ -215,25 +213,16 @@ class ApiController extends AbstractController
             ], 200, [], ['groups' => ['inventory']]);
     }
 
-    #[Route('/api/inventorys_edit/{id}', name: 'app_api_inventory_edit', methods: ['PUT'])]
-    public function editInventory(Inventory $inventory, ChambreRepository $chambreRepository, Request $request, SerializerInterface $serializer, EntityManagerInterface $em, ValidatorInterface $validator): Response
+    #[Route('/api/inventorys/{id}/edit', name: 'app_api_inventory_edit', methods: ['PUT'])]
+    public function editInventory(Inventory $inventory, Request $request, SerializerInterface $serializer, EntityManagerInterface $em, ValidatorInterface $validator): Response
     {
         $body = $request->getContent();
-        $inventory = $serializer->deserialize($body, Inventory::class, 'json', ['object_to_populate' => $inventory]);
-
-        // $inventory->setAuteur($this->getUser());
-        // $chambres = $chambreRepository->findAll();
-        // foreach ($chambres as $key => $value) {
-        //     if ($value->getNChambre() == $inventory->getNChambre()) {
-        //         $new_chambre = $value;
-        //     }
-        // }       
-        // $inventory->setChambre($new_chambre);
+        $serializer->deserialize($body, Inventory::class, 'json', ['object_to_populate' => $inventory]);
+        
         $errors = $validator->validate($inventory);
         if (count($errors) > 0) {
             return $this->json($errors, 400);
         }
-        $em->persist($inventory);
         $em->flush();
         return $this->json([
             'status' => 200,
@@ -245,21 +234,21 @@ class ApiController extends AbstractController
     #[Route('/api/new_inventory', name: 'app_api_inventory_new', methods: ['POST'])]
     public function newInventory(ChambreRepository $chambreRepository, Request $request, SerializerInterface $serializer, EntityManagerInterface $em, ValidatorInterface $validator): Response
     {
-
+        $new_chambre = null;
         $body = $request->getContent();
         $inventory = $serializer->deserialize($body, Inventory::class, 'json');
-
         //dans cet objet on renseigne le createdAt
         $inventory->setCreatedAt(new \DateTimeImmutable());
-        // $inventory->setDateEntree(new \DateTime());
-        // $inventory->setDateSortie(new \DateTime());
+        $inventory->setDateEntree(new \DateTime());
+        $inventory->setDateSortie(new \DateTime());
+
         $inventory->setAuteur($this->getUser());
 
         $chambres = $chambreRepository->findAll();
-        $new_chambre = null;
         foreach ($chambres as $key => $value) {
-            if ($value->getNChambre() == $inventory->getNChambre())
+            if ($value->getNChambre() == $inventory->getNChambre()) {
                 $new_chambre = $value;
+            }
         }
         $inventory->setChambre($new_chambre);
 
@@ -275,7 +264,5 @@ class ApiController extends AbstractController
             'data' => $inventory,
             ], 201, [], ['groups' => ['inventory']]);
     }
-
-   
 }
 

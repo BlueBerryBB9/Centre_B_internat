@@ -20,7 +20,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['user', 'inventory'])]
+    #[Groups(['user', 'inventory', 'chambre'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
@@ -52,7 +52,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var Collection<int, Inventory>
      */
     #[ORM\OneToMany(targetEntity: Inventory::class, mappedBy: 'auteur')]
-    #[Groups(['user'])]
+    #[Groups(['user2'])]
     private Collection $inventories;
 
     public function __construct()

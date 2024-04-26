@@ -19,7 +19,7 @@ class Chambre
     private ?int $id = null;
 
     #[ORM\Column]
-    // #[Groups(['chambre'])]
+    #[Groups(['chambre'])]
     private ?int $n_chambre = null;
 
     #[ORM\Column(length: 100)]
@@ -58,8 +58,14 @@ class Chambre
      * @var Collection<int, Inventory>
      */
     #[ORM\OneToMany(targetEntity: Inventory::class, mappedBy: 'chambre')]
-    #[Groups(['chambre'])]
+    #[Groups(['chambre2'])]
     private Collection $inventories;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $isAbsent = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $isPMR = null;
 
     
     // #[ORM\Column(nullable: true)]
@@ -239,4 +245,28 @@ class Chambre
 
     //     return $this;
     // }
+
+    public function isAbsent(): ?bool
+    {
+        return $this->isAbsent;
+    }
+
+    public function setAbsent(?bool $isAbsent): static
+    {
+        $this->isAbsent = $isAbsent;
+
+        return $this;
+    }
+
+    public function isPMR(): ?bool
+    {
+        return $this->isPMR;
+    }
+
+    public function setPMR(?bool $isPMR): static
+    {
+        $this->isPMR = $isPMR;
+
+        return $this;
+    }
 }
