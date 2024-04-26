@@ -39,10 +39,21 @@ class ApiController extends AbstractController
         $em->flush();
         return $this->json([
            'status' => 201,
-           'message' => 'user created',
+           'message' => 'Utilisateur créé',
             'data' => $user,
             ], 201, [], ['groups' => 'user']);
     }
+
+    // #[Route('api/login', name:  'app_api_login', methods: ['POST'])]
+    // public function login(Request $request, SerializerInterface $serializer, EntityManagerInterface $em, ValidatorInterface $validator): Response
+    // {
+    //     $user = $this->getUser();
+    //     $userData = [
+    //         'email' => $user->getEmail();
+    //         ''
+    //     ]
+    // }
+
 
     #[Route('api/logout', name: 'app_api_logout', methods: ['POST'])]
     public function logout(Request $request, SerializerInterface $serializer, EntityManagerInterface $em, ValidatorInterface $validator): Response
@@ -58,7 +69,7 @@ class ApiController extends AbstractController
         if ($user) {
             return $this->json([
                 'status' => 200,
-                'message' => 'user logged out',
+                'message' => 'Utilisateur déconnecté',
                 ], 200);     
         }
         return $this->json([
@@ -74,7 +85,7 @@ class ApiController extends AbstractController
         $users = $em->getRepository(User::class)->findAll();
         return $this->json([
             'status' => 200,
-            'message' => 'users list',
+            'message' => 'liste des users',
             'data' => $users,
             ], 200, [], ['groups' => 'user']);
     }
@@ -136,7 +147,7 @@ class ApiController extends AbstractController
         $em->flush();
         return $this->json([
            'status' => 201,
-           'message' => 'chambre created',
+           'message' => 'chambre créée',
             'data' => $chambre,
             ], 201, [], ['groups' => ['chambre']]);
     }
@@ -147,7 +158,7 @@ class ApiController extends AbstractController
         $chambres = $em->getRepository(Chambre::class)->findAll();
         return $this->json([
            'status' => 200,
-           'message' => 'chambres list',
+           'message' => 'liste des chambres',
             'data' => $chambres,
             ], 200, [], ['groups' => ['chambre']]);
     }
@@ -189,7 +200,7 @@ class ApiController extends AbstractController
         $inventorys = $em->getRepository(Inventory::class)->findAll();
         return $this->json([
            'status' => 200,
-           'message' => 'inventorys list',
+           'message' => 'liste de l\'état des lieux ',
             'data' => $inventorys,
             ], 200, [], ['groups' => ['inventory']]);
     }
@@ -205,12 +216,19 @@ class ApiController extends AbstractController
     }
 
     #[Route('/api/inventorys_edit/{id}', name: 'app_api_inventory_edit', methods: ['PUT'])]
-    public function editInventory(Inventory $inventory, Request $request, SerializerInterface $serializer, EntityManagerInterface $em, ValidatorInterface $validator): Response
+    public function editInventory(Inventory $inventory, ChambreRepository $chambreRepository, Request $request, SerializerInterface $serializer, EntityManagerInterface $em, ValidatorInterface $validator): Response
     {
         $body = $request->getContent();
         $inventory = $serializer->deserialize($body, Inventory::class, 'json', ['object_to_populate' => $inventory]);
 
-        
+        // $inventory->setAuteur($this->getUser());
+        // $chambres = $chambreRepository->findAll();
+        // foreach ($chambres as $key => $value) {
+        //     if ($value->getNChambre() == $inventory->getNChambre()) {
+        //         $new_chambre = $value;
+        //     }
+        // }       
+        // $inventory->setChambre($new_chambre);
         $errors = $validator->validate($inventory);
         if (count($errors) > 0) {
             return $this->json($errors, 400);
@@ -219,9 +237,9 @@ class ApiController extends AbstractController
         $em->flush();
         return $this->json([
             'status' => 200,
-           'message' => 'inventory edited succesfully',
+           'message' => 'état des lieux modifié avec succès',
            'data' => $inventory,
-           ], 200, [], ['groups' => ['inventory']]);
+           ], 200, [], ['groups' => ['inventory'], ]);
     }
 
     #[Route('/api/new_inventory', name: 'app_api_inventory_new', methods: ['POST'])]
@@ -233,8 +251,8 @@ class ApiController extends AbstractController
 
         //dans cet objet on renseigne le createdAt
         $inventory->setCreatedAt(new \DateTimeImmutable());
-        $inventory->setDateEntree(new \DateTime());
-        $inventory->setDateSortie(new \DateTime());
+        // $inventory->setDateEntree(new \DateTime());
+        // $inventory->setDateSortie(new \DateTime());
         $inventory->setAuteur($this->getUser());
 
         $chambres = $chambreRepository->findAll();
@@ -253,7 +271,7 @@ class ApiController extends AbstractController
         $em->flush();
         return $this->json([
             'status' => 201,
-           'message' => 'inventory created',
+           'message' => 'inventaire créé',
             'data' => $inventory,
             ], 201, [], ['groups' => ['inventory']]);
     }
