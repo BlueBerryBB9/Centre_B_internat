@@ -1,12 +1,12 @@
 # Centre_B_internat project
 
-## General details
+## General details :
 - Used Languages : PHP with symfony framework, react.js
 - Time : 1 week
 - Used Softwares : VScode / Symfony
 - Teams size : 3 person
 
-## Context
+## Context :
 - During my second year at 89, the goal was to create a managing tool for boarding school, by using Rest API on Symfony server side and React.js on client side.
 
 ## Skills : 
