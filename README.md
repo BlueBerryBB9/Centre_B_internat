@@ -19,4 +19,4 @@
 - Very interesting to learn React.js
 - 1 week was a short time to make client and server side
 
-## Specifications (Cahier des charges) [here](Cahier_des_charges1_2.docx)
+## Specifications (Cahier des charges) [here](Cahier_des_charges1_2.pdf)
