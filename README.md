@@ -19,4 +19,7 @@
 - Very interesting to learn React.js
 - 1 week was a short time to make client and server side
 
+## Main page :
+![image](https://github.com/BlueBerryBB9/Centre_B_internat/assets/118543302/cdddc89f-d4ad-4262-9abe-70f504b4272b)
+
 ## Specifications (Cahier des charges) [here](Cahier_des_charges1_2.pdf)
